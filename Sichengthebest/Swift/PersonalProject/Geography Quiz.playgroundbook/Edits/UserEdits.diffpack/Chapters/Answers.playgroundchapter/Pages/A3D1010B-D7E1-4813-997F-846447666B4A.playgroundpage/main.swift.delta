@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>BaseFile</key>
+	<string>Chapters/Answers.playgroundchapter/Pages/Template.playgroundpage/main.swift</string>
+	<key>Diffs</key>
+	<array>
+		<dict>
+			<key>ModifiedContent</key>
+			<string>show("Hello, welcome to Sichengthebest's capitals quiz! Ready to start?")
+pauseUntilTapped(message: "Let's go!")
+capitals()
+
+func askDifficulty() -&gt; String {
+    show("How hard should your game be?")
+    let difficultyAnswer = askForChoice(strings:["Easy","Normal","Hard","Extreme"])
+    return difficultyAnswer
+}
+
+func sample(n:Int,list:Array&lt;String&gt;) -&gt; Array&lt;String&gt; {
+    var tempList = list
+    var rList: [String] = []
+    for i in 1...n {
+        var currentIndex = 0
+        var element = tempList.randomElement()
+        for choice in tempList {
+            if choice == element {
+                break
+            }
+            currentIndex += 1
+        }
+        tempList.remove(at: currentIndex)
+        rList.append(element ?? "")
+    }
+    return rList
+}
+
+func getChoices(difficulty:String,country:String) -&gt; Array&lt;String&gt; {
+    var choices: [String] = []
+    let countries = capitalQ[difficulty] ?? ["":["":[""]]]
+    let country = countries[country] ?? ["":[""]]
+    let rightAnswer = country["yes"] ?? [""]
+    let wrongAnswer = country["no"] ?? [""]
+    let funnyAnswer = country["haha"] ?? [""]
+    choices.append(rightAnswer[0] ?? "")
+    choices.append(contentsOf: sample(n:2,list:wrongAnswer))
+    choices.append(funnyAnswer.randomElement() ?? "")
+    choices.shuffle()
+    return choices
+}
+
+func getPoints(n: Int, r: Int) -&gt; String {
+    var result = Double(r) / Double(n) * 100
+    if result &gt;= 90 {
+        return "WOW! You got \(result)% on this quiz! Bravo!"
+    } else if result &lt; 90 &amp;&amp; result &gt;= 60 {
+        return "Well done, you got \(result)% on your quiz."
+    } else {
+        return "I feel sorry for you, but you got \(result)% on your quiz. Let's see if you can do better next time!"
+    }}
+
+func capitals() {
+    let difficulty = askDifficulty()
+    let countries = Array(capitalQ[difficulty]!.keys)
+    var points = 0
+    for i in 0...countries.count-1 {
+        let country = countries[i]
+        show("What is the capital of \(country) ?")
+        var choices = getChoices(difficulty: difficulty, country: country)
+        let answer = askForChoice(strings: choices)
+        let countries = capitalQ[difficulty] ?? ["":["":[""]]]
+        let countryDict = countries[country] ?? ["":[""]]
+        let rightAnswer = countryDict["yes"] ?? [""]
+        if rightAnswer[0] == answer {
+            points += 1
+            show("✅ Good job! You got the right answer!")
+        } else {
+            show("❌ No my friend! You got it all wrong! The right answer is \(rightAnswer[0])...")
+        }
+    }
+    show(getPoints(n: countries.count, r: points))
+    pauseUntilTapped(message: "Try again?")
+    capitals()
+}
+</string>
+			<key>ModifiedRange</key>
+			<string>{242, 2647}</string>
+			<key>OriginalContent</key>
+			<string></string>
+			<key>OriginalRange</key>
+			<string>{242, 0}</string>
+		</dict>
+	</array>
+	<key>FormatVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>
