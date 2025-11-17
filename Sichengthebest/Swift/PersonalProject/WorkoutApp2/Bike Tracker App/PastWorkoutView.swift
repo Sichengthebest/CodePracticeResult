@@ -57,6 +57,28 @@ struct HistoryView: View {
             Map {
                 MapPolyline(coordinates:decodeArray(array: workout.coordArray))
                     .stroke(.blue, lineWidth: 5)
+                Annotation("Workout start", coordinate: decodeArray(array: workout.coordArray)[0]) {
+                    Image(systemName: "flag.fill")
+                        .foregroundColor(.green)
+                        .padding(7)
+                        .background(Color.white)
+                        .clipShape(Circle())
+                }
+                Annotation("Workout finish", coordinate: decodeArray(array: workout.coordArray)[decodeArray(array: workout.coordArray).count-1]) {
+                    Image(systemName: "flag.checkered")
+                        .foregroundColor(.white)
+                        .padding(7)
+                        .background(Color.black)
+                        .clipShape(Circle())
+                }
+                ForEach(workout.coordArray2, id: \.self) { coordArray in
+                    if coordArray.isEmpty == false {
+                        MapPolyline(coordinates:decodeArray(array: coordArray))
+                            .stroke(.gray, lineWidth: 5)
+                    }
+                    
+                }
+                
             }
         }
     }

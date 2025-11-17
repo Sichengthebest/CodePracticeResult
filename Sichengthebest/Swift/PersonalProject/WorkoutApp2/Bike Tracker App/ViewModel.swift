@@ -16,9 +16,22 @@ struct Workout: Codable,Identifiable,Equatable {
     var distance: Double = 0.0
     var elevationGain: Double = 0.0
     var coordArray: [[Double]] = []
+    var coordArray2: [[[Double]]] = []
     
     mutating func addCoordToArray(coord:CLLocationCoordinate2D) {
         coordArray.append([coord.latitude,coord.longitude])
+    }
+    mutating func addCoordToArray2(coordArrayArray:[[CLLocationCoordinate2D]]) {
+        var count = 0
+        for i in 1...coordArrayArray.count {
+            coordArray2.append([])
+        }
+        for coordA in coordArrayArray {
+            for coord in coordA {
+                coordArray2[count].append([coord.latitude,coord.longitude])
+            }
+            count += 1
+        }
     }
 }
 

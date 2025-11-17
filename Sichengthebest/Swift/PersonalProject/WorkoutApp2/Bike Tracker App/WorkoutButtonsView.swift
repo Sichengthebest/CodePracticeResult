@@ -12,7 +12,9 @@ struct WorkoutButtons: View {
     @AppStorage("workouts") var workouts: [Workout] = []
     @Binding var isStarted: Bool
     @Binding var isRunning: Bool
+    @Binding var justRunning: Bool
     @Binding var userCoordinates: [CLLocationCoordinate2D]
+    @Binding var pauseCoordinates: [[CLLocationCoordinate2D]]
     @Binding var progressTime: Int
     @Binding var distance: Double
     
@@ -21,6 +23,7 @@ struct WorkoutButtons: View {
             if isStarted {
                 Button {
                     isRunning.toggle()
+                    justRunning = true
                 } label: {
                     RectButtonView(text: isRunning ? "Pause":"Resume", image: isRunning ? "pause.fill" : "play.fill", color: isRunning ? .yellow : .green)
                         .frame(height: 30)
@@ -33,6 +36,7 @@ struct WorkoutButtons: View {
                         for coordinate in userCoordinates {
                             workouts[workouts.count-1].addCoordToArray(coord: coordinate)
                         }
+                        workouts[workouts.count-1].addCoordToArray2(coordArrayArray: pauseCoordinates)
                     }
                     userCoordinates = []
                     progressTime = 0
@@ -45,6 +49,7 @@ struct WorkoutButtons: View {
                 Button {
                     isStarted = true
                     isRunning = true
+                    justRunning = false
                 } label: {
                     RectButtonView(text: "Start", image: "figure.outdoor.cycle", color: .blue)
                         .frame(height: 30)

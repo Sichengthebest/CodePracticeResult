@@ -11,7 +11,7 @@ import MapKit
 struct MenuView: View {
     @State var position: MapCameraPosition = .userLocation(fallback: .automatic)
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack {
                 NavigationLink {
                     WorkoutView()
